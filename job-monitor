@@ -1,0 +1,19 @@
+if sudo docker ps | grep htmlos
+  then
+  echo "html container already running"
+  elif sudo docker ps -a | grep htmlos
+  then
+  sudo docker start htmlos
+  else
+  sudo docker run -dit --name htmlos -v /root/test_code:/usr/local/apache2/htdocs/ -p 8097:80 httpd:latest
+fi
+
+if sudo docker ps | grep phpos
+  then
+  echo "php container already running"
+  elif sudo docker ps -a | grep phpos
+  then
+  sudo docker start phpos
+  else
+   sudo docker run -dit --name phpos -v /root/test_code:/var/www/html/ -p 8098:80 vimal13/apache-webserver-php
+fi
