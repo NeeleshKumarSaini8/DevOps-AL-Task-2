@@ -1,0 +1,35 @@
+#!/bin/bash
+
+export ok=200
+export status1=$(curl -o /dev/null -s -w "%{http_code}" http://192.168.43.193:8097/test_code.html)
+export status2=$(curl -o /dev/null -s -w "%{http_code}" http://192.168.43.193:8098/test_code.php)
+
+if sudo docker ps | grep htmlos
+  then
+  if [[ "$status1" == "$ok" ]]
+  then
+  echo "HTML site is running properly"
+  else
+  echo "HTML site is not running properly"
+  exit 1
+  fi
+  else
+  echo "htmlos container not running"
+  exit 1
+fi
+
+
+
+if sudo docker ps | grep phpos
+  then
+  if [[ "$status2" == "$ok" ]]
+   then
+   echo "PHP site is running properly"
+   else
+   echo "PHP site is not running properly"
+   #exit 1
+  fi
+  else
+  echo "phpos container not running"
+  #exit 1
+fi
